@@ -3,10 +3,12 @@ package org.example
 import org.example.console.Console
 import org.example.entityManagerFact.EntityManagerFact
 import org.example.login.Login
+import org.example.menu.Menu
 import org.example.model.Usuario
 import org.example.repository.ProductoRepository
 import org.example.repository.ProveedorRepository
 import org.example.repository.UsuarioRepository
+import org.example.service.UsuarioService
 
 
 fun main() {
@@ -17,16 +19,20 @@ fun main() {
     val provRepo = ProveedorRepository()
     val prodRepo = ProductoRepository()
 
-    val user = Usuario("pepe", "pepe")
+    val us = UsuarioService(ur)
+
+    val user = Usuario("admin", "admin")
     ur.insertUser(user)
     val consola = Console()
 
 
-    val login = Login(consola, ur)
+    val login = Login(consola, us)
 
     login.login()
 
-    println("BIEN HECHO CRACK")
+    val menu = Menu(consola)
+
+   menu.menu()
 
 
 

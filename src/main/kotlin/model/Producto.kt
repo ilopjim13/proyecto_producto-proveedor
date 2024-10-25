@@ -15,13 +15,13 @@ data class Producto(
     @Column
     val categoria:String,
     @Column
-    val nombre:String,
+    var nombre:String,
     @Column
     val descripcion:String,
     @Column
     val precioSinIva:Float,
     @Column
-    val stock:Int,
+    var stock:Int,
     @ManyToOne
     @JoinColumn(name = "id_proveedor")
     val proveedor:Proveedor,
@@ -35,18 +35,6 @@ data class Producto(
     val id:String = generateId()
 
 
-    private fun generateId():String {
-        var idGenerate = ""
-        categoria.forEachIndexed { index, c ->
-            if (index < 3) idGenerate += c
-        }
-        nombre.forEachIndexed { index, c ->
-            if (index < 3) idGenerate += c
-        }
-        proveedor.nombre.forEachIndexed { index, c ->
-            if (index < 3) idGenerate += c
-        }
-        return idGenerate
-    }
+
 
 }

@@ -1,20 +1,17 @@
 package org.example.model
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
-import jakarta.persistence.Table
+import jakarta.persistence.*
 
 @Entity
 @Table(name = "proveedores")
 data class Proveedor(
     @Id
-    val id:Long,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id:Long?,
     @Column(name = "nombre")
-    val nombre:String,
+    var nombre:String,
     @Column(name = "direccion")
-    val direccion :String,
+    var direccion :String,
     @OneToMany(mappedBy = "proveedor")
     val productos:List<Producto>
 ){

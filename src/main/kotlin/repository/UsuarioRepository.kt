@@ -1,6 +1,5 @@
 package org.example.repository
 
-import jakarta.persistence.EntityManager
 import org.example.entityManagerFact.EntityManagerFact
 import org.example.model.Usuario
 
