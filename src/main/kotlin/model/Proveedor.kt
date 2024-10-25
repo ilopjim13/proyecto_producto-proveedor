@@ -8,7 +8,7 @@ import jakarta.persistence.Table
 
 @Entity
 @Table(name = "proveedores")
-class Proveedor(
+data class Proveedor(
     @Id
     val id:Long,
     @Column(name = "nombre")
@@ -17,5 +17,5 @@ class Proveedor(
     val direccion :String,
     @OneToMany(mappedBy = "proveedor")
     val productos:List<Producto>
-) : IElement {
+){
 }

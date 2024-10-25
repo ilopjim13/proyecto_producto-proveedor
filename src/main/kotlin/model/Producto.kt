@@ -11,7 +11,7 @@ import java.util.*
 
 @Entity
 @Table(name = "producto")
-class Producto(
+data class Producto(
     @Column
     val categoria:String,
     @Column
@@ -25,7 +25,7 @@ class Producto(
     @ManyToOne
     @JoinColumn(name = "id_proveedor")
     val proveedor:Proveedor,
-    ) : IElement {
+    ) {
 
     @Column
     val fechaAlta: Date = Date()

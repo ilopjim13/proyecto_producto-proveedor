@@ -1,19 +1,34 @@
 package org.example
 
+import org.example.console.Console
 import org.example.entityManagerFact.EntityManagerFact
+import org.example.login.Login
 import org.example.model.Usuario
+import org.example.repository.ProductoRepository
+import org.example.repository.ProveedorRepository
+import org.example.repository.UsuarioRepository
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
 fun main() {
     val em = EntityManagerFact.generate()
 
-    val usuario = Usuario("pepe", "pepe")
 
-    em.transaction.begin()
-    em.persist(usuario)
-    em.transaction.commit()
-    em.close()
+    val ur = UsuarioRepository()
+    val provRepo = ProveedorRepository()
+    val prodRepo = ProductoRepository()
+
+    val user = Usuario("pepe", "pepe")
+    ur.insertUser(user)
+    val consola = Console()
+
+
+    val login = Login(consola, ur)
+
+    login.login()
+
+    println("BIEN HECHO CRACK")
+
+
 
 
 }

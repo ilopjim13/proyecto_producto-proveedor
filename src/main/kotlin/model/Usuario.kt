@@ -8,9 +8,9 @@ import org.jetbrains.annotations.Nullable
 
 @Entity
 @Table(name = "usuario")
-class Usuario(
+data class Usuario(
     @Id
-    val nombre:String,
+    var nombre:String,
     @Column(nullable = false, length = 20)
-    val password:String) : IElement {
+    var password:String){
 }

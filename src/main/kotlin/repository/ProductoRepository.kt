@@ -1,6 +1,6 @@
 package org.example.repository
 
-class ProductoRepository:IRepository {
+class ProductoRepository {
 
 
 
