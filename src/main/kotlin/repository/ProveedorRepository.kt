@@ -42,7 +42,7 @@ class ProveedorRepository {
 
         em.transaction.begin()
         try {
-            lista = em.createQuery("FROM Departamento", Proveedor::class.java).resultList
+            lista = em.createQuery("FROM proveedor", Proveedor::class.java).resultList
             em.transaction.commit()
         } catch (e:Exception) {
             em.transaction.rollback()

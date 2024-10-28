@@ -6,6 +6,8 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import org.example.repository.ProductoRepository
+import org.example.service.ProductoService
 import java.util.*
 
 
@@ -27,12 +29,16 @@ data class Producto(
     val proveedor:Proveedor,
     ) {
 
+    private val pdRepo = ProductoRepository()
+    private val pr:ProductoService = ProductoService(pdRepo)
+
     @Column
     val fechaAlta: Date = Date()
     @Column
     val precioIva:Float = precioSinIva * 1.21f
     @Id
-    val id:String = generateId()
+    val id:String = pr.generateId(categoria, nombre, proveedor)
+
 
 
 

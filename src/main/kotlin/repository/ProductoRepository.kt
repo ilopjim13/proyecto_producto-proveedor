@@ -2,6 +2,7 @@ package org.example.repository
 
 import org.example.entityManagerFact.EntityManagerFact
 import org.example.model.Producto
+import org.example.model.Proveedor
 import org.example.model.Usuario
 
 class ProductoRepository {
@@ -36,36 +37,74 @@ class ProductoRepository {
         return producto
     }
 
-    fun updateName(id:String, nombreCambiado:String) {
+    fun selectWithStock():MutableList<Producto>  {
+        val em = EntityManagerFact.generate()
+        var lista:MutableList<Producto> = mutableListOf()
+
+        em.transaction.begin()
+        try {
+            lista = em.createQuery("FROM producto WHERE stock > 0", Producto::class.java).resultList
+            em.transaction.commit()
+        } catch (e:Exception) {
+            em.transaction.rollback()
+        }
+
+        em.close()
+        return lista
+    }
+
+    fun selectWithoutStock():MutableList<Producto>  {
+        val em = EntityManagerFact.generate()
+        var lista:MutableList<Producto> = mutableListOf()
+
+        em.transaction.begin()
+        try {
+            lista = em.createQuery("FROM producto WHERE stock = 0", Producto::class.java).resultList
+            em.transaction.commit()
+        } catch (e:Exception) {
+            em.transaction.rollback()
+        }
+
+        em.close()
+        return lista
+    }
+
+    fun updateName(id:String, nombreCambiado:String):Boolean {
         val em = EntityManagerFact.generate()
         val producto: Producto?
+        var okey = false
 
         em.transaction.begin()
         try {
             producto = em.find(Producto::class.java,id)
             producto.nombre = nombreCambiado
             em.transaction.commit()
+            okey = true
         } catch (e:Exception) {
             em.transaction.rollback()
         }
 
         em.close()
+        return okey
     }
 
-    fun updateStock(id:String, stock:Int) {
+    fun updateStock(id:String, stock:Int):Boolean {
         val em = EntityManagerFact.generate()
         val producto: Producto?
+        var okey = false
 
         em.transaction.begin()
         try {
             producto = em.find(Producto::class.java,id)
             producto.stock = stock
             em.transaction.commit()
+            okey = true
         } catch (e:Exception) {
             em.transaction.rollback()
         }
 
         em.close()
+        return okey
     }
 
     fun delete(id:String):Boolean {

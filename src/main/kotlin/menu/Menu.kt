@@ -55,11 +55,11 @@ class Menu(private val consola:Console, private val provServ: ProveedorService, 
         val cat = readln()
         consola.mostrarMensaje("Introduce la descripción: ")
         val desc = readln()
-        val precio:Float = pedirPrecio()
+        val precio:Float = consola.pedirPrecio()
         consola.mostrarMensaje("Introduce el stock: ")
-        val stock:Int = pedirNum("Introduce el stock: ", "ERROR - ID incorrecto.")
+        val stock:Int = consola.pedirNum("Introduce el stock: ", "ERROR - ID incorrecto.")
 
-        val proveedor: Proveedor = pedirProveedor()
+        val proveedor: Proveedor = consola.pedirProveedor(provServ)
 
         val producto = Producto(cat, nombre, desc, precio, stock, proveedor)
 
@@ -68,63 +68,40 @@ class Menu(private val consola:Console, private val provServ: ProveedorService, 
     }
 
     private fun bajaProducto() {
-        val id:String = pedirID()
+        val id:String = consola.pedirString("Introduce el ID del producto: ")
         if (prodServ.delete(id)) consola.mostrarMensaje("El producto se ha eliminado correctamente.")
-        else consola.mostrarMensaje()
+        else consola.mostrarMensaje("No existe el producto.")
+    }
+
+    private fun modificarNombreProd() {
+        val id = consola.pedirString("Introduce el ID del producto: ")
+        if (prodServ.checkID(id) != null) {
+            val nombre = consola.pedirString("Introduce el nombre del producto: ")
+            if (prodServ.updateName(id, nombre)) consola.mostrarMensaje("El nombre se ha cambiado correctamente.")
+            else consola.mostrarMensaje("No se ha podido cambiar el nombre del producto")
+        } else consola.mostrarMensaje("El id introducido no exite")
+    }
+
+    private fun modificarStockProd() {
+        val id = consola.pedirString("Introduce el ID del producto: ")
+        if (prodServ.checkID(id) != null) {
+            val stock = consola.pedirNum("Introduce el Stock a cambiar: ", "ERROR - EL número del stock debe ser correcto.")
+            if (prodServ.updateStock(id, stock)) consola.mostrarMensaje("El stock se ha cambiado correctamente.")
+            else consola.mostrarMensaje("No se ha podido cambiar el stock del producto")
+        } else consola.mostrarMensaje("El id introducido no exite")
+    }
+
+    private fun obtenerProd() {
+        val id = consola.pedirString("Introduce el ID del producto a mostrar:  ")
+        val prod = prodServ.checkID(id)
+        if (prod != null) consola.mostrarMensaje(prod.toString())
+        else consola.mostrarMensaje("El producto buscado no existe.")
+    }
+
+    private fun conStock() {
 
     }
 
-    private fun pedirID():String {
-        consola.mostrarMensaje("Introduce el ID del producto: ")
-        val id = readln()
-        return id
-    }
-
-    private fun pedirProveedor():Proveedor {
-        var id:Int
-        var prov: Proveedor?
-        do {
-            consola.mostrarMensaje("Introduce el ID del producto: ",false)
-            id = readln().toIntOrNull() ?: -1
-            prov = provServ.comprobarID(id)
-            if (id < 0 || prov == null) consola.mostrarMensaje("ERROR - ID incorrecto.")
-        }  while (prov == null)
-        return prov
-    }
-
-    private fun pedirPrecio():Float {
-        var num:Float
-        do {
-            consola.mostrarMensaje("Introduce el precio sin IVA: ",false)
-            num = readln().toFloatOrNull() ?: -1.0f
-            if (num < 0) consola.mostrarMensaje("ERROR - Precio incorrecto.")
-        }  while (num < 0)
-        return num
-    }
-
-    private fun pedirNum(texto:String, error:String):Int {
-        var num:Int
-        do {
-            consola.mostrarMensaje("Introduce el stock: ",false)
-            num = readln().toIntOrNull() ?: -1
-            if (num < 0) consola.mostrarMensaje("ERROR - Stock incorrecto.")
-        }  while (num < 0)
-        return num
-    }
-
-    private fun pedirOpcion(opciones:Int):Int {
-
-        var opcion:Int
-
-        do {
-            consola.mostrarMensaje(">> Selecciona una opción: ", false)
-             opcion = readln().toIntOrNull() ?: -1
-            if (opcion !in (1..opciones)) consola.mostrarMensaje("Error - opción incorrecta.")
-        } while (opcion !in (1..opciones))
-
-        return opcion
-
-    }
 
 
 }

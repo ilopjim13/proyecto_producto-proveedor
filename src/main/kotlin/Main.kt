@@ -8,6 +8,8 @@ import org.example.model.Usuario
 import org.example.repository.ProductoRepository
 import org.example.repository.ProveedorRepository
 import org.example.repository.UsuarioRepository
+import org.example.service.ProductoService
+import org.example.service.ProveedorService
 import org.example.service.UsuarioService
 
 
@@ -18,6 +20,9 @@ fun main() {
     val ur = UsuarioRepository()
     val provRepo = ProveedorRepository()
     val prodRepo = ProductoRepository()
+
+    val provServ = ProveedorService(provRepo)
+    val prodService = ProductoService(prodRepo)
 
     val us = UsuarioService(ur)
 
@@ -30,7 +35,7 @@ fun main() {
 
     login.login()
 
-    val menu = Menu(consola)
+    val menu = Menu(consola,provServ,prodService)
 
    menu.menu()
 

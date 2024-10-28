@@ -4,7 +4,7 @@ import org.example.model.Producto
 import org.example.model.Proveedor
 import org.example.repository.ProductoRepository
 
-class ProductoService(val pr: ProductoRepository) {
+class ProductoService(private val pr: ProductoRepository) {
 
     fun generateId(categoria:String, nombre:String, proveedor: Proveedor):String {
         return categoria.take(3) + nombre.take(3) + proveedor.nombre.take(3)
@@ -13,5 +13,23 @@ class ProductoService(val pr: ProductoRepository) {
     fun insert(prod: Producto) {
         pr.insert(prod)
     }
+
+    fun delete(id:String):Boolean {
+        return pr.delete(id)
+    }
+
+    fun checkID(id: String):Producto? {
+        return pr.select(id)
+    }
+
+    fun updateName(id:String, name:String):Boolean {
+        return pr.updateName(id, name)
+    }
+
+    fun updateStock(id:String, stock:Int):Boolean {
+        return pr.updateStock(id, stock)
+    }
+
+    fun
 
 }
