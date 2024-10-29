@@ -37,7 +37,7 @@ class UsuarioRepository {
 
     fun updateUserName(nombre:String, nombreCambiado:String) {
         val em = EntityManagerFact.generate()
-        var user:Usuario? = null
+        val user:Usuario?
 
         em.transaction.begin()
         try {
@@ -53,7 +53,7 @@ class UsuarioRepository {
 
     fun updateUserPass(nombre:String, pass:String) {
         val em = EntityManagerFact.generate()
-        var user:Usuario? = null
+        val user:Usuario?
 
         em.transaction.begin()
         try {
@@ -68,7 +68,7 @@ class UsuarioRepository {
 
     fun delete(nombre:String) {
         val em = EntityManagerFact.generate()
-        var user:Usuario? = null
+        val user:Usuario?
 
         em.transaction.begin()
         try {

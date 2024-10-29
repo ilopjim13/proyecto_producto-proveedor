@@ -41,9 +41,9 @@ class Console {
     fun pedirNum(texto:String, error:String):Int {
         var num:Int
         do {
-            mostrarMensaje("Introduce el stock: ",false)
+            mostrarMensaje(texto,false)
             num = readln().toIntOrNull() ?: -1
-            if (num < 0) mostrarMensaje("ERROR - Stock incorrecto.")
+            if (num < 0) mostrarMensaje(error)
         }  while (num < 0)
         return num
     }

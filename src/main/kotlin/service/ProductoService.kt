@@ -1,7 +1,6 @@
 package org.example.service
 
 import org.example.model.Producto
-import org.example.model.Proveedor
 import org.example.repository.ProductoRepository
 
 class ProductoService(private val pr: ProductoRepository) {

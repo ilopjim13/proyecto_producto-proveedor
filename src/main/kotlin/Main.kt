@@ -1,7 +1,6 @@
 package org.example
 
 import org.example.console.Console
-import org.example.entityManagerFact.EntityManagerFact
 import org.example.login.Login
 import org.example.menu.Menu
 import org.example.model.Producto
