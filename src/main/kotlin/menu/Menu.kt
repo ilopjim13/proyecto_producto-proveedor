@@ -105,7 +105,7 @@ class Menu(private val consola:Console, private val provServ: ProveedorService, 
     }
 
     private fun sinStock() {
-        val lista = prodServ.selectWithOutStock()
+        val lista = prodServ.selectWithoutStock()
         lista.forEach { consola.mostrarMensaje(it.toString()) }
     }
 

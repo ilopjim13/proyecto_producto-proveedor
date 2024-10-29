@@ -30,7 +30,7 @@ class ProductoService(private val pr: ProductoRepository) {
         return pr.selectWithStock()
     }
 
-    fun selectWithOutStock():MutableList<Producto> {
+    fun selectWithoutStock():MutableList<Producto> {
         return pr.selectWithoutStock()
     }
 
