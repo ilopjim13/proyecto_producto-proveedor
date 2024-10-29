@@ -17,12 +17,12 @@ class Console {
     }
 
     fun pedirProveedor(provServ:ProveedorService): Proveedor {
-        var id:Int
+        var id:Long
         var prov: Proveedor?
         do {
-            mostrarMensaje("Introduce el ID del producto: ",false)
-            id = readln().toIntOrNull() ?: -1
-            prov = provServ.comprobarID(id)
+            mostrarMensaje("Introduce el ID del proveedor: ",false)
+            id = readln().toLongOrNull() ?: -1
+            prov = provServ.checkID(id)
             if (id < 0 || prov == null) mostrarMensaje("ERROR - ID incorrecto.")
         }  while (prov == null)
         return prov
@@ -48,7 +48,7 @@ class Console {
         return num
     }
 
-    private fun pedirOpcion(opciones:Int):Int {
+    fun pedirOpcion(opciones:Int):Int {
 
         var opcion:Int
 

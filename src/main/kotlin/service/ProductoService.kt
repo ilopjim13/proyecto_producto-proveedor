@@ -6,9 +6,6 @@ import org.example.repository.ProductoRepository
 
 class ProductoService(private val pr: ProductoRepository) {
 
-    fun generateId(categoria:String, nombre:String, proveedor: Proveedor):String {
-        return categoria.take(3) + nombre.take(3) + proveedor.nombre.take(3)
-    }
 
     fun insert(prod: Producto) {
         pr.insert(prod)
@@ -30,6 +27,12 @@ class ProductoService(private val pr: ProductoRepository) {
         return pr.updateStock(id, stock)
     }
 
-    fun
+    fun selectWithStock():MutableList<Producto> {
+        return pr.selectWithStock()
+    }
+
+    fun selectWithOutStock():MutableList<Producto> {
+        return pr.selectWithoutStock()
+    }
 
 }

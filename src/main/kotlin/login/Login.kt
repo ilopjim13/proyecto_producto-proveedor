@@ -1,7 +1,6 @@
 package org.example.login
 
 import org.example.console.Console
-import org.example.repository.UsuarioRepository
 import org.example.service.UsuarioService
 
 class Login(private val consola: Console, private val userService: UsuarioService) {
@@ -12,7 +11,7 @@ class Login(private val consola: Console, private val userService: UsuarioServic
         while (!log) {
             val (nombre, pass) = pedirCredenciales()
 
-            if (userService.comprobarUsuario(nombre, pass)) log = true
+            if (userService.checkUser(nombre, pass)) log = true
             else consola.mostrarMensaje("**ERROR** El nombre o la contraseña es inconrrecta.")
         }
     }

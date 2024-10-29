@@ -5,11 +5,15 @@ import org.example.repository.ProveedorRepository
 
 class ProveedorService(private val pr: ProveedorRepository) {
 
-    fun comprobarID(id: Int):Proveedor? {
+    fun checkID(id: Long):Proveedor? {
         return pr.select(id)
     }
 
-    fun insert() {
+    fun insert(proveedor:Proveedor){
+        pr.insert(proveedor)
+    }
 
+    fun selectAll(): MutableList<Proveedor> {
+        return pr.selectAll()
     }
 }

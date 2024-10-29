@@ -13,9 +13,11 @@ class Menu(private val consola:Console, private val provServ: ProveedorService, 
         do {
             mostrarMenu()
 
-            opcion = pedirOpcion(10)
+            opcion = consola.pedirOpcion(10)
 
-        } while (opcion != 9)
+            ejecutarMenu(opcion)
+
+        } while (opcion != 10)
     }
 
 
@@ -49,14 +51,13 @@ class Menu(private val consola:Console, private val provServ: ProveedorService, 
     }
 
     private fun altaProducto() {
-        consola.mostrarMensaje("Introduce el nombre del producto: ")
+        consola.mostrarMensaje("Introduce el nombre del producto: ", false)
         val nombre = readln()
-        consola.mostrarMensaje("Introduce la categoria del producto: ")
+        consola.mostrarMensaje("Introduce la categoria del producto: ", false)
         val cat = readln()
-        consola.mostrarMensaje("Introduce la descripción: ")
+        consola.mostrarMensaje("Introduce la descripción: ", false)
         val desc = readln()
         val precio:Float = consola.pedirPrecio()
-        consola.mostrarMensaje("Introduce el stock: ")
         val stock:Int = consola.pedirNum("Introduce el stock: ", "ERROR - ID incorrecto.")
 
         val proveedor: Proveedor = consola.pedirProveedor(provServ)
@@ -99,9 +100,28 @@ class Menu(private val consola:Console, private val provServ: ProveedorService, 
     }
 
     private fun conStock() {
-
+        val lista = prodServ.selectWithStock()
+        lista.forEach { consola.mostrarMensaje(it.toString()) }
     }
 
+    private fun sinStock() {
+        val lista = prodServ.selectWithOutStock()
+        lista.forEach { consola.mostrarMensaje(it.toString()) }
+    }
+
+    private fun mostrarProvProd(){
+        val id = consola.pedirString("Introduce el ID del producto para mostrar su proveedor: ")
+        val producto = prodServ.checkID(id)
+        if (producto != null) {
+            val proveedor = producto.proveedor.id?.let { provServ.checkID(it) }
+            consola.mostrarMensaje(proveedor.toString())
+        } else consola.mostrarMensaje("El ID del producto introducido es erróneo.")
+    }
+
+    private fun mostrarProvedores() {
+        val lista = provServ.selectAll()
+        lista.forEach { consola.mostrarMensaje(it.toString()) }
+    }
 
 
 }

@@ -29,17 +29,20 @@ data class Producto(
     val proveedor:Proveedor,
     ) {
 
-    private val pdRepo = ProductoRepository()
-    private val pr:ProductoService = ProductoService(pdRepo)
-
     @Column
     val fechaAlta: Date = Date()
     @Column
     val precioIva:Float = precioSinIva * 1.21f
     @Id
-    val id:String = pr.generateId(categoria, nombre, proveedor)
+    val id:String = generateId(categoria, nombre, proveedor)
 
+    private fun generateId(categoria:String, nombre:String, proveedor: Proveedor):String {
+        return categoria.take(3) + nombre.take(3) + proveedor.nombre.take(3)
+    }
 
+    override fun toString(): String {
+        return "Id: $id, Nombre: $nombre, Categoría: $categoria, Descripción: $descripcion, Fecha alta: $fechaAlta, Precio sin IVA: $precioSinIva, Precio con IVA: $precioIva, Stock: $stock, Proveedor: ${proveedor.nombre}"
+    }
 
 
 

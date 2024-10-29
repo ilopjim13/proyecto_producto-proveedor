@@ -2,35 +2,31 @@ package org.example.repository
 
 import org.example.entityManagerFact.EntityManagerFact
 import org.example.model.Producto
-import org.example.model.Proveedor
-import org.example.model.Usuario
 
 class ProductoRepository {
 
     fun insert(producto: Producto) {
         val em = EntityManagerFact.generate()
         em.transaction.begin()
-
         try {
             em.persist(producto)
             em.transaction.commit()
         } catch (e:Exception) {
             em.transaction.rollback()
+            em.close()
         }
-
         em.close()
     }
 
     fun select(id:String) : Producto? {
         val em = EntityManagerFact.generate()
         var producto: Producto? = null
-
-        em.transaction.begin()
         try {
             producto = em.find(Producto::class.java,id)
             em.transaction.commit()
         } catch (e:Exception) {
             em.transaction.rollback()
+            em.close()
         }
 
         em.close()
@@ -43,10 +39,11 @@ class ProductoRepository {
 
         em.transaction.begin()
         try {
-            lista = em.createQuery("FROM producto WHERE stock > 0", Producto::class.java).resultList
+            lista = em.createQuery("FROM Producto WHERE stock > 0", Producto::class.java).resultList
             em.transaction.commit()
         } catch (e:Exception) {
             em.transaction.rollback()
+            em.close()
         }
 
         em.close()
@@ -56,15 +53,14 @@ class ProductoRepository {
     fun selectWithoutStock():MutableList<Producto>  {
         val em = EntityManagerFact.generate()
         var lista:MutableList<Producto> = mutableListOf()
-
         em.transaction.begin()
         try {
-            lista = em.createQuery("FROM producto WHERE stock = 0", Producto::class.java).resultList
+            lista = em.createQuery("FROM Producto WHERE stock = 0", Producto::class.java).resultList
             em.transaction.commit()
         } catch (e:Exception) {
             em.transaction.rollback()
+            em.close()
         }
-
         em.close()
         return lista
     }
@@ -73,7 +69,6 @@ class ProductoRepository {
         val em = EntityManagerFact.generate()
         val producto: Producto?
         var okey = false
-
         em.transaction.begin()
         try {
             producto = em.find(Producto::class.java,id)
@@ -82,8 +77,8 @@ class ProductoRepository {
             okey = true
         } catch (e:Exception) {
             em.transaction.rollback()
+            em.close()
         }
-
         em.close()
         return okey
     }
@@ -101,6 +96,7 @@ class ProductoRepository {
             okey = true
         } catch (e:Exception) {
             em.transaction.rollback()
+            em.close()
         }
 
         em.close()
@@ -120,10 +116,10 @@ class ProductoRepository {
             eliminado = true
         } catch (e:Exception) {
             em.transaction.rollback()
+            em.close()
         }
 
         em.close()
         return eliminado
     }
-
 }

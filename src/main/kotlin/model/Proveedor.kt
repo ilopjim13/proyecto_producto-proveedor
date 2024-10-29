@@ -12,7 +12,10 @@ data class Proveedor(
     var nombre:String,
     @Column(name = "direccion")
     var direccion :String,
-    @OneToMany(mappedBy = "proveedor")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "proveedor")
     val productos:List<Producto>
 ){
+    override fun toString(): String {
+        return "Id: $id, Nombre: $nombre, Dirección: $direccion, Productos: $productos"
+    }
 }
